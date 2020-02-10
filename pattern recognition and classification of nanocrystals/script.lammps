@@ -1,0 +1,35 @@
+#PBS -N Ico127
+#  PBS -A kaf2_a_g_sc_default                          
+                                                      
+#PBS -A open                                          
+                                                      
+#PBS -j oe                                            
+#PBS -l pmem=2gb                                      
+                                                      
+# PBS -l size=8                                       
+                                                      
+#PBS -l walltime=36:00:00                             
+#PBS -l nodes=2:ppn=16:stmem                          
+                        
+cd $PBS_O_WORKDIR                                     
+                                                      
+echo "Starting job on 'hostname' at 'date'"
+echo " "                                              
+                                                      
+
+ module load intel/16.0.3
+        module load impi/5.1.3
+        module load mkl/11.3.3
+
+mpirun -np 31 /storage/work/ozj1/lmp_intel_cpu_intelmpi  -p 31x1  -in in.min_Pd
+
+
+
+
+
+                                                    
+echo " "                                              
+echo "Completing job on 'hostname' at 'date'"
+echo " "                                              
+                                                      
+                                        

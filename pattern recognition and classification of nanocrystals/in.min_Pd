@@ -1,0 +1,114 @@
+
+# **********************************Initialization**************************** 
+
+units 			metal
+boundary 		p p p 
+atom_style 		full
+
+neigh_modify    delay 5 every 5 check yes
+
+pair_style 		 eam/fs 
+
+# ***********************************read_data********************************
+
+read_data      ../Pd_Rod_127.0.data
+
+# *******************************Define pair styles***************************
+
+
+pair_coeff 		* * Pd.lammps.eam  Pd
+
+
+thermo 			0
+thermo_style    custom step temp etotal pe ke vol press lx ly lz  
+thermo_modify	flush yes
+
+#dump            1 all custom 1000 ico.lammpstrj id mol type q x y z
+#dump_modify     1 sort id
+
+
+#variable rep world 0 1 2 3 4 5 6 
+#dump 1 all atom 1000 temper.$rep.lammpstrj
+
+timestep        0.001
+
+minimize		0.0 1.0e-7 1000000 100000 
+dump 2 all custom 1 file.lammpstrj  id x y z
+dump_modify 2 sort id
+run 0
+undump 2
+
+
+
+variable STEP equal step
+variable TEMP equal temp
+
+
+variable ETOTAL equal etotal
+variable PE equal pe
+variable KE equal ke
+variable VOL equal vol
+variable PRESS equal press
+variable LX equal lx
+variable LY equal ly
+variable LZ equal lz
+variable PXX equal pxx
+variable PYY equal pyy
+variable PZZ equal pzz
+
+
+variable a loop 30
+label loop
+delete_atoms group all
+read_data    ../Pd_Rod_127.$a.data  add append
+
+minimize                0.0 1.0e-7 1000000 100000
+
+dump 1 all custom 1 file.lammpstrj  id x y z
+dump_modify 1 sort id append yes
+run 0 
+undump 1
+next a
+jump in.min_Pd loop
+
+
+
+
+
+
+
+
+#dump 2 all custom 20000 Rep5.$a.lammpstrj  id x y z
+
+#dump_modify     2 sort id
+
+
+fix             COM all momentum 1 linear 1 1 1 angular
+
+
+#dump 2 all atom 1000 Dectemper.$t.lammpstrj
+
+#dump_modify     2 sort id
+
+#fix           1  NVT all nvt temp 500.0 500.0 0.1                                                               
+
+
+#run 3000000
+
+#write_data  Rep5.$Q.data
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
