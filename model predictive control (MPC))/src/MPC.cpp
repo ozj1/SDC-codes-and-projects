@@ -5,21 +5,21 @@
 
 using CppAD::AD;
 
-// TODO: Set the timestep length and duration
-double T = .65; // seconds
-size_t N = 8; // number of timesteps into the horizon
-double dt = T/N; // time interval
+// TODO: Set the timestep length and duration.
+double T = .65; // seconds.
+size_t N = 8; // number of timesteps into the horizon.
+double dt = T/N; // time interval.
 
-// This value assumes the model presented in the classroom is used.
+// This value assumes the model presented in the classroom is used..
 //
 // It was obtained by measuring the radius formed by running the vehicle in the
 // simulator around in a circle with a constant steering angle and velocity on a
 // flat terrain.
 //
-// Lf was tuned until the the radius formed by the simulating the model
-// presented in the classroom matched the previous radius.
+// Lf was tuned until the the radius formed by the simulating the model.
+// presented in the classroom matched the previous radius..
 //
-// This is the length from front to CoG that has a similar radius.
+// This is the length from front to CoG that has a similar radius..
 const double Lf = 2.67;
 
 double ref_cte = 0;
